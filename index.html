@@ -27,9 +27,11 @@
       <p><strong>Version Code:</strong> <span id="versionCode"></span></p>
       <img src="" id="appIcon" alt="App Icon" />
     </div>
+    <div id="error" style="display: none; color: red"></div>
 
     <script>
       const dropArea = document.getElementById("dropArea");
+      const errorElement = document.getElementById("error");
 
       // Prevent the default behavior when a file is dragged over the drop area
       dropArea.addEventListener("dragover", (e) => {
@@ -61,9 +63,11 @@
               appIconElement.src = result.icon;
 
               appInfoElement.style.display = "block";
+              errorElement.style.display = "none"; // Hide error if shown previously
             })
             .catch((err) => {
-              console.log("err ----> ", err);
+              errorElement.textContent = "Error: " + err.message;
+              errorElement.style.display = "block";
             });
         }
       });
