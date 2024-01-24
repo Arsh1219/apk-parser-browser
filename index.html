@@ -21,6 +21,7 @@
     </div>
     <div id="appInfo" style="display: none">
       <h2>App Info</h2>
+      <p><strong>App Name:</strong> <span id="appName"></span></p>
       <p><strong>Package Name:</strong> <span id="packageName"></span></p>
       <p><strong>Version Name:</strong> <span id="versionName"></span></p>
       <p><strong>Version Code:</strong> <span id="versionCode"></span></p>
@@ -47,11 +48,13 @@
           parser
             .parse()
             .then((result) => {
+              const appNameElement = document.getElementById("appName");
               const packageNameElement = document.getElementById("packageName");
               const versionNameElement = document.getElementById("versionName");
               const versionCodeElement = document.getElementById("versionCode");
               const appIconElement = document.getElementById("appIcon");
 
+              appNameElement.textContent = result.application.label.join(", ");
               packageNameElement.textContent = result.package;
               versionNameElement.textContent = result.versionName;
               versionCodeElement.textContent = result.versionCode;
