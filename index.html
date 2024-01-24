@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APK Info</title>
+    <script src="//unpkg.com/app-info-parser@1.1.6/dist/app-info-parser.min.js"></script>
+  </head>
+  <body>
+    <input type="file" name="file" id="file" onchange="fileSelect()" />
+    <div id="appInfo" style="display: none">
+      <h2>App Info</h2>
+      <p><strong>Package Name:</strong> <span id="packageName"></span></p>
+      <p><strong>Version Name:</strong> <span id="versionName"></span></p>
+      <p><strong>Version Code:</strong> <span id="versionCode"></span></p>
+      <img src="" id="appIcon" alt="App Icon" />
+    </div>
+
+    <script>
+      function fileSelect() {
+        const files = document.getElementById("file").files;
+        const parser = new window.AppInfoParser(files[0]);
+        const appInfoElement = document.getElementById("appInfo");
+
+        parser
+          .parse()
+          .then((result) => {
+            const packageNameElement = document.getElementById("packageName");
+            const versionNameElement = document.getElementById("versionName");
+            const versionCodeElement = document.getElementById("versionCode");
+            const appIconElement = document.getElementById("appIcon");
+
+            packageNameElement.textContent = result.package;
+            versionNameElement.textContent = result.versionName;
+            versionCodeElement.textContent = result.versionCode;
+            appIconElement.src = result.icon;
+
+            appInfoElement.style.display = "block";
+          })
+          .catch((err) => {
+            console.log("err ----> ", err);
+          });
+      }
+    </script>
+  </body>
+</html>
